@@ -1,28 +1,30 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import countriesJson from "./countries.json";
+// import countriesJson from "./countries.json";
 import Navbar from "./components/Navbar";
 import CountriesList from "./components/CountriesList";
 import CountryDetails from "./components/CountryDetails";
 import { Route, Routes } from "react-router-dom";
+import axios from "axios";
 
 function App() {
-  const [countries, setCountries] = useState([]);
-
-  const fetchData = () => {
-    return fetch("https://ih-countries-api.herokuapp.com/countries")
-          .then((response) => response.json())
-          .then((data) => setCountries(data.reverse()));
-  }
+  const [countries, setCountries] = useState();
 
   useEffect(() => {
-      fetchData();
-  },[])
+    async function fetchData() {
+      const response = await axios.get(
+        'https://ih-countries-api.herokuapp.com/countries'
+      );
+      setCountries(response.data.reverse());
+    }
+    fetchData();
+  }, []);
+
 
   return (
     <div className="App">
       <Navbar />
-      {countries.length > 0 && 
+      {countries && 
       <div className="container">
         <div className="row">
           <CountriesList countries={countries} />
@@ -32,7 +34,8 @@ function App() {
           </Routes>
         </div>
       </div>
-}</div>
+}
+</div>
   );
 }
 

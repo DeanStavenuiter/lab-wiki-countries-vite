@@ -8,7 +8,6 @@ const CountryDetails = ({ countries }) => {
       return country;
     }
   });
-
   let borderNames = [];
 
   countries.forEach((country) => {
@@ -22,9 +21,12 @@ const CountryDetails = ({ countries }) => {
 
   return (
     <div className="col-7">
+                        <img
+                    src={`https://flagpedia.net/data/flags/icon/72x54/${clickedCountry[0].alpha2Code.toLowerCase()}.png`}
+                    alt={clickedCountry[0].name.common}
+                  />
       <h1>{clickedCountry[0].name.common}</h1>
       <table className="table">
-        <thead></thead>
         <tbody>
           <tr>
             <td style={{ width: "30%" }}>Capital</td>
